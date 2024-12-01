@@ -64,11 +64,11 @@ export default function Flights() {
   }
   
  
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
+  // const handlePrevPage = () => {
+  //   if (currentPage > 1) {
+  //     setCurrentPage((prevPage) => prevPage - 1);
+  //   }
+  // };
 
   const handleNextPage = () => {
     // if (currentPage < totalPages) {
