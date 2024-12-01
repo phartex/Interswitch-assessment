@@ -6,8 +6,7 @@ import Flights from './Components/Flights.tsx';
 import './App.css';
 
 function App() {
-  return (
-    
+  return (    
     <Router>
       <Routes>
         <Route path="/" element={< Register/>} />
