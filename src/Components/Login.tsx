@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import InterswitchImage from "../image/interswitch_logo.svg";
 import 'react-toastify/dist/ReactToastify.css';
+import Nav from '../shared/Nav.tsx';
 
 export default function Login() {
 
@@ -44,7 +44,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/register', {
+      const response = await axios.post('https://flight-management-proxy.onrender.com/api/login', {
         email,
         password,
       });
@@ -75,15 +75,12 @@ export default function Login() {
   };
 
   return (
-    <div className='md:min-h-screen bg-gray-100'>
-      <div className='p-4'>
-        {/* <img src={InterswitchImage} alt="Interswitch Logo" /> */}
-      </div>
+    <div className='md:min-h-screen bg-gray-100 py-4 px-10'>
+  <Nav/>
 
       <div className="pt-6 flex flex-col items-center justify-center ">
 
-        <p className='pt-16 px-5 text-2xl md:pt-0 font-bold'>Flight Management System</p>
-
+    
 
         <form onSubmit={handleLogin} className="bg-white mt-5 p-6 rounded shadow-md w-full max-w-sm">
           <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>

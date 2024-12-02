@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import InterswitchImage from "../image/interswitch_logo.svg";
 import 'react-toastify/dist/ReactToastify.css';
+import Nav from '../shared/Nav.tsx';
 
 
 // Define types for form data and error
@@ -38,7 +38,7 @@ const Register: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:5000/api/register', formData);
+      const response = await axios.post('https://flight-management-proxy.onrender.com/api/register', formData);
       console.log(response);
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token);
@@ -65,17 +65,13 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className='bg-gray-100 md:min-h-screen'>
-      <div className='p-4'>
-        {/* <img src={InterswitchImage} alt="Interswitch Logo" /> */}
-      </div>
-
+    <div className='py-4 px-10 bg-gray-100 md:min-h-screen p-4'>
+      <Nav />
       <div className="pt-6 flex flex-col items-center justify-center">
 
-        <p className='pt-3 px-5 text-2xl md:pt-0 font-bold'>Flight Management System</p>
-        <h1 className="text-2xl mt-6  mb-4">Register</h1>
 
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-sm">
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-sm md:mt-8">
+          <h2 className="text-2xl font-semibold text-center mb-6">Register</h2>
           {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -130,6 +126,8 @@ const Register: React.FC = () => {
               'Register'
             )}
           </button>
+
+          <p className='py-3 text-right '>Already registered? <a  onClick={() => navigate('/login')} className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer'>please login</a></p>
 
         </form>
 

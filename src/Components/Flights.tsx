@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import InterswitchImage from "../image/interswitch_logo.svg";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
+import Nav from "../shared/Nav.tsx";
 
 export default function Flights() {
   const [flights, setFlights] = useState([]);
@@ -10,25 +11,34 @@ export default function Flights() {
   const [currentPage, setCurrentPage] = useState(1);
   const [flightsPerPage] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
   const [totalPages, setTotalPages] = useState(0);
+  const navigate = useNavigate();
 
+  interface Flight {
+    id: string;
+    img: string;
+    status: string;
+    code: string;
+    capacity: number;
+    departureDate: string;
+  }
 
   useEffect(() => {
-   
+
     fetchFlights();
-  }, [currentPage,flightsPerPage]);
+  }, [currentPage, flightsPerPage]);
 
 
 
   const fetchFlights = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/flights", {
+      const response = await axios.get("https://flight-management-proxy.onrender.com/api/flights", {
         params: { page: currentPage, size: flightsPerPage }, // Pass currentPage and size
       });
       console.log(response.data); // Debugging purpose
       setFlights(response.data.resources); // Adjust according to your API response
-      setTotalPages(response.data.counts); 
+      setTotalPages(response.data.counts);
 
     } catch (error) {
       console.error("Error fetching flights:", error);
@@ -40,15 +50,16 @@ export default function Flights() {
   );
 
   const handleEditClick = (flight: any) => {
+    console.log(flight)
     setSelectedFlight(flight);
     setIsModalOpen(true);
   };
 
 
-  const handleDeleteClick = async (flight)=>{
+  const handleDeleteClick = async (flight) => {
     try {
       const response = await axios.delete(`http://localhost:5000/api/flights/${flight.id}`);
-      console.log(response.data); 
+      console.log(response.data);
       fetchFlights();
       toast.success('Deleted Successfully!', {
         position: "top-right",
@@ -62,8 +73,8 @@ export default function Flights() {
       });
     }
   }
-  
- 
+
+
   // const handlePrevPage = () => {
   //   if (currentPage > 1) {
   //     setCurrentPage((prevPage) => prevPage - 1);
@@ -84,15 +95,15 @@ export default function Flights() {
 
   const handleUpdateFlight = async () => {
     console.log(selectedFlight)
-    const payload ={      
-        code: selectedFlight.code,
-        capacity: selectedFlight.capacity,
-        departureDate: selectedFlight.departureDate  
+    const payload = {
+      code: selectedFlight?.code,
+      capacity: selectedFlight?.capacity,
+      departureDate: selectedFlight?.departureDate
     }
     console.log(payload)
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/flights/${selectedFlight.id}`,
+        `http://localhost:5000/api/flights/${selectedFlight?.id}`,
         payload
       );
       console.log(response.data);
@@ -101,9 +112,9 @@ export default function Flights() {
         autoClose: 5000,
       });
       // Update flights state
-      setFlights((prev : any) =>
-        prev.map((flight:any) =>
-          flight.id === selectedFlight.id ? response.data : flight
+      setFlights((prev: any) =>
+        prev.map((flight: any) =>
+          flight.id === selectedFlight?.id ? response.data : flight
         )
       );
       setIsModalOpen(false); // Close modal
@@ -115,16 +126,24 @@ export default function Flights() {
       console.error("Error updating flight:", error);
     }
   };
-  
- 
+
+
 
   return (
-    <div className="p-4 bg-gray-100 min-h-screen">
-      <div>
-        {/* <img src={InterswitchImage} alt="Interswitch Logo" /> */}
-      </div>
+    <div className="py-4 px-10 bg-gray-100 min-h-screen">
+      <Nav />
 
-      <h1 className="text-2xl font-bold mb-4 text-center pt-5">Flight Management</h1>
+      <div className="flex justify-between mt-3">
+        <div></div>
+        <div className="py-4">
+          <button
+            onClick={() => navigate('/create-flight')}
+            className="px-4 py-2 rounded bg-[#18425D] text-white hover:bg-white hover:text-[#18425D] font-medium"
+          >
+            Create Flight
+          </button>
+        </div>
+      </div>
 
       {/* Search */}
       <input
@@ -159,7 +178,7 @@ export default function Flights() {
                     <button onClick={() => handleEditClick(flight)} className="bg-[#18425D] text-white px-3 py-1 rounded hover:bg-[#18425D]">
                       Edit
                     </button>
-                    <button onClick={() => handleDeleteClick(flight)}  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                    <button onClick={() => handleDeleteClick(flight)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                       Delete
                     </button>
                   </td>
@@ -200,6 +219,7 @@ export default function Flights() {
       </div>
 
 
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-md w-96">
@@ -210,6 +230,7 @@ export default function Flights() {
                 handleUpdateFlight();
               }}
             >
+              {/* Flight Code */}
               <div className="mb-4">
                 <label className="block mb-2">Flight Code</label>
                 <input
@@ -222,6 +243,8 @@ export default function Flights() {
                   className="border p-2 w-full rounded"
                 />
               </div>
+
+              {/* Capacity */}
               <div className="mb-4">
                 <label className="block mb-2">Capacity</label>
                 <input
@@ -233,6 +256,37 @@ export default function Flights() {
                   className="border p-2 w-full rounded"
                 />
               </div>
+
+              {/* Status */}
+              <div className="mb-4">
+                <label className="block mb-2">Status</label>
+                <select
+                  value={selectedFlight?.status || ""}
+                  onChange={(e) =>
+                    setSelectedFlight({ ...selectedFlight, status: e.target.value })
+                  }
+                  className="border p-2 w-full rounded"
+                >
+                  <option value="none">None</option>
+                  <option value="on-time">On Time</option>
+                  <option value="delayed">Delayed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              {/* Departure Date */}
+              <div className="mb-4">
+                <label className="block mb-2">Departure Date</label>
+                <input
+                  type="date"
+                  value={selectedFlight?.departureDate || ""}
+                  onChange={(e) =>
+                    setSelectedFlight({ ...selectedFlight, departureDate: e.target.value })
+                  }
+                  className="border p-2 w-full rounded"
+                />
+              </div>
+
               <div className="flex justify-end space-x-2">
                 <button
                   type="button"
@@ -243,7 +297,7 @@ export default function Flights() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  className="px-4 py-2 bg-[#18425D] text-white rounded"
                 >
                   Save
                 </button>
@@ -252,7 +306,12 @@ export default function Flights() {
           </div>
         </div>
       )}
-   <ToastContainer />
+
+
+
+
+
+      <ToastContainer />
     </div>
   );
 }
