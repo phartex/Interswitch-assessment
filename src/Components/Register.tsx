@@ -67,7 +67,7 @@ const Register: React.FC = () => {
   return (
     <div className='bg-gray-100 md:min-h-screen'>
       <div className='p-4'>
-        <img src={InterswitchImage} alt="Interswitch Logo" />
+        {/* <img src={InterswitchImage} alt="Interswitch Logo" /> */}
       </div>
 
       <div className="pt-6 flex flex-col items-center justify-center">

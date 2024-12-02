@@ -121,7 +121,7 @@ export default function Flights() {
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
       <div>
-        <img src={InterswitchImage} alt="Interswitch Logo" />
+        {/* <img src={InterswitchImage} alt="Interswitch Logo" /> */}
       </div>
 
       <h1 className="text-2xl font-bold mb-4 text-center pt-5">Flight Management</h1>

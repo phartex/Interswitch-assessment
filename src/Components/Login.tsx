@@ -77,7 +77,7 @@ export default function Login() {
   return (
     <div className='md:min-h-screen bg-gray-100'>
       <div className='p-4'>
-        <img src={InterswitchImage} alt="Interswitch Logo" />
+        {/* <img src={InterswitchImage} alt="Interswitch Logo" /> */}
       </div>
 
       <div className="pt-6 flex flex-col items-center justify-center ">
