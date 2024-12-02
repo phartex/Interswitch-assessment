@@ -135,7 +135,7 @@ const Register: React.FC = () => {
             )}
           </button>
 
-          <p className='py-3 text-right '>Already registered? <a onClick={() => navigate('/login')} className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer'>please login</a></p>
+          <p className='pt-8 text-right '>Already registered? <a onClick={() => navigate('/login')} className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer'>please login</a></p>
 
         </form>
 

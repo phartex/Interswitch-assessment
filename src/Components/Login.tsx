@@ -20,7 +20,7 @@ export default function Login() {
     return regex.test(email);
   };
 
-  
+
 
   const validatePassword = (password) => {
     return password.length >= 4;
@@ -80,11 +80,11 @@ export default function Login() {
 
   return (
     <div className='min-h-screen bg-gray-100 py-4 px-10'>
-  <Nav/>
+      <Nav />
 
       <div className="pt-6 flex flex-col items-center justify-center ">
 
-    
+
 
         <form onSubmit={handleLogin} className="bg-white md:mt-16 p-6 rounded shadow-md w-full max-w-sm">
           <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
@@ -123,24 +123,11 @@ export default function Login() {
             />
           </div>
 
-          {/* <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-[#18425D] text-white py-2 px-4 rounded hover:bg-[#18425D] disabled:opacity-50"
-          >
-            {loading ? (
-              <span className="loader animate-spin border-t-2 border-white border-solid rounded-full h-5 w-5 inline-block"></span>
-            ) : (
-              'Login'
-            )}
-          </button> */}
-
-<button
+          <button
             type="submit"
             disabled={!isFormValid || loading}
-            className={`w-full bg-[#18425D] text-white py-2 px-4 rounded hover:bg-[#18425D] disabled:opacity-50 ${
-              !isFormValid || loading ? 'cursor-not-allowed' : ''
-            }`}
+            className={`w-full bg-[#18425D] text-white py-2 px-4 rounded hover:bg-[#18425D] disabled:opacity-50 ${!isFormValid || loading ? 'cursor-not-allowed' : ''
+              }`}
           >
             {loading ? (
               <span className="loader animate-spin border-t-2 border-white border-solid rounded-full h-5 w-5 inline-block"></span>

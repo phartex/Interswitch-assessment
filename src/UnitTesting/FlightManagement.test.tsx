@@ -1,7 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import React, { useState } from 'react';
-import RegisterComponent from '../Components/Register'
+import RegisterComponent from '../Components/Register';
+import FlightsComponent from '../Components/Flights'
+import CreateFlightComponent from '../Components/CreateFlight.tsx'
 import axios from 'axios';
+import { MemoryRouter } from 'react-router-dom';
+
+jest.mock('axios');
+// const mockedAxios = axios as jest.Mocked<typeof axios>;
+
 
 const SearchInput = () => {
   const [search, setSearch] = useState('');
@@ -36,3 +43,4 @@ describe('SearchInput', () => {
     expect(input.value).toBe('Flight123');
   });
 });
+
