@@ -26,7 +26,7 @@ export default function CreateFlight() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
+    const createFlight = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
@@ -59,7 +59,7 @@ export default function CreateFlight() {
             <Nav />
 
             <div className="pt-6 flex flex-col items-center justify-center">
-                <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-sm md:mt-8">
+                <form onSubmit={createFlight} className="bg-white p-6 rounded shadow-md w-full max-w-sm md:mt-8">
                     <h2 className="text-2xl font-semibold text-center mb-6">Create Flight</h2>
                     {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
                     <div className="mb-4">

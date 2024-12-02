@@ -26,6 +26,9 @@ const Register: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const isFormValid = formData.name && formData.email && formData.password.length >= 4 && formData.password.length <= 6;
+
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +68,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className='py-4 px-10 bg-gray-100 md:min-h-screen p-4'>
+    <div className='py-4 px-10 bg-gray-100 min-h-screen p-4'>
       <Nav />
       <div className="pt-6 flex flex-col items-center justify-center">
 
@@ -108,6 +111,8 @@ const Register: React.FC = () => {
             <input
               type="password"
               id="password"
+              minLength={4}
+              maxLength={6}
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -115,10 +120,13 @@ const Register: React.FC = () => {
               required
             />
           </div>
+         
+
           <button
             type="submit"
-            disabled={loading}
-            className="w-full bg-[#18425D] text-white py-2 px-4 rounded hover:bg-[#18425D] disabled:opacity-50"
+            disabled={!isFormValid || loading}
+            className={`w-full bg-[#18425D] text-white py-2 px-4 rounded hover:bg-[#18425D] disabled:opacity-50 ${!isFormValid || loading ? 'cursor-not-allowed' : ''
+              }`}
           >
             {loading ? (
               <span className="loader animate-spin border-t-2 border-white border-solid rounded-full h-5 w-5 inline-block"></span>
@@ -127,7 +135,7 @@ const Register: React.FC = () => {
             )}
           </button>
 
-          <p className='py-3 text-right '>Already registered? <a  onClick={() => navigate('/login')} className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer'>please login</a></p>
+          <p className='py-3 text-right '>Already registered? <a onClick={() => navigate('/login')} className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer'>please login</a></p>
 
         </form>
 

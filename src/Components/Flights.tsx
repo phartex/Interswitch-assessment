@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import Nav from "../shared/Nav.tsx";
+import { FaSearch } from 'react-icons/fa';
 
 export default function Flights() {
   const [flights, setFlights] = useState([]);
@@ -130,7 +131,7 @@ export default function Flights() {
 
 
   return (
-    <div className="py-4 px-10 bg-gray-100 min-h-screen">
+    <div className="py-4 px-3 md:px-10 bg-gray-100 min-h-screen">
       <Nav />
 
       <div className="flex justify-between mt-3">
@@ -146,13 +147,25 @@ export default function Flights() {
       </div>
 
       {/* Search */}
-      <input
+      {/* <input
         type="text"
         placeholder="Search by flight code"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="border p-2 rounded mb-4 w-full"
-      />
+      /> */}
+
+
+      <div className="flex items-center border border-gray-300 rounded p-2 w-full my-5 bg-white">
+        <FaSearch className="text-gray-400 h-5 w-5" />
+        <input
+          type="text"
+          placeholder="Search by flight code"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="flex-1 outline-none px-2 text-gray-700 bg-white"
+        />
+      </div>
 
       {/* Responsive Table */}
       <div className="overflow-x-auto ">
@@ -174,7 +187,7 @@ export default function Flights() {
                   <td className="px-4 py-2">{flight.capacity}</td>
                   <td className="px-4 py-2">{flight.departureDate}</td>
                   <td className="px-4 py-2">{flight.status}</td>
-                  <td className="px-4 py-2 text-center space-x-2">
+                  <td className="px-4 py-2 text-center space-x-2 flex justify-between">
                     <button onClick={() => handleEditClick(flight)} className="bg-[#18425D] text-white px-3 py-1 rounded hover:bg-[#18425D]">
                       Edit
                     </button>
