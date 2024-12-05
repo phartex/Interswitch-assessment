@@ -4,9 +4,18 @@ import RegisterComponent from '../Components/Register';
 import FlightsComponent from '../Components/Flights'
 import CreateFlightComponent from '../Components/CreateFlight.tsx'
 import axios from 'axios';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import Login from '../Components/Login.tsx';
 
 jest.mock('axios');
+jest.mock('react-toastify', () => ({
+  toast: {
+    success: jest.fn(),
+    error: jest.fn(),
+  },
+}));
+
+
 // const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 

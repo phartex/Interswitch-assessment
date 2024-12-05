@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import Nav from "../shared/Nav.tsx";
 import { FaSearch } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export default function Flights() {
   const [flights, setFlights] = useState([]);
@@ -133,14 +134,20 @@ export default function Flights() {
     }
   };
 
+  const handleGoBack = () => {
+    navigate(-1); 
+  };
 
 
   return (
     <div className="py-4 px-3 md:px-10 bg-gray-100 min-h-screen">
       <Nav />
 
-      <div className="flex justify-between mt-3">
-        <div></div>
+      <div className="flex justify-between mt-3 items-center">
+        <div>
+          <button className="flex items-center" onClick={handleGoBack}><FaArrowLeft className="text-lg" /> {/* Back arrow icon */}
+          Go Back</button>
+        </div>
         <div className="py-4">
           <button
             onClick={() => navigate('/create-flight')}
