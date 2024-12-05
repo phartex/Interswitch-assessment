@@ -14,7 +14,9 @@ export default function Flights() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
   const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
 
   interface Flight {
     id: string;
@@ -33,6 +35,7 @@ export default function Flights() {
 
 
   const fetchFlights = async () => {
+    setLoading(true);
     try {
       const response = await axios.get("https://flight-management-proxy.onrender.com/api/flights", {
         params: { page: currentPage, size: flightsPerPage }, // Pass currentPage and size
@@ -43,6 +46,8 @@ export default function Flights() {
 
     } catch (error) {
       console.error("Error fetching flights:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -186,13 +191,26 @@ export default function Flights() {
                   <td className="px-4 py-2">{flight.code}</td>
                   <td className="px-4 py-2">{flight.capacity}</td>
                   <td className="px-4 py-2">{flight.departureDate}</td>
-                  <td className="px-4 py-2">{flight.status}</td>
-                  <td className="px-4 py-2 text-center space-x-2 flex justify-between">
+                  <td className="px-4 py-2 ">{flight.status}</td>
+                  <td className="px-4 py-2 text-center flex justify-evenly">
                     <button onClick={() => handleEditClick(flight)} className="bg-[#18425D] text-white px-3 py-1 rounded hover:bg-[#18425D]">
                       Edit
                     </button>
-                    <button onClick={() => handleDeleteClick(flight)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                    {/* <button onClick={() => handleDeleteClick(flight)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                       Delete
+                    </button> */}
+
+
+                    <button
+                      type="submit"
+                      onClick={() => handleDeleteClick(flight)}
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 ml-2"
+                    >
+                      {loading ? (
+                        <span className="loader animate-spin border-t-2 border-white border-solid rounded-full h-5 w-5 inline-block"></span>
+                      ) : (
+                        "Delete"
+                      )}
                     </button>
                   </td>
                 </tr>
