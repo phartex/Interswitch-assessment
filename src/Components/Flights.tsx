@@ -28,12 +28,7 @@ export default function Flights() {
     departureDate: string;
   }
 
-  useEffect(() => {
-
-    fetchFlights();
-  }, [currentPage, flightsPerPage]);
-
-
+  
 
   const fetchFlights = async () => {
     setLoading(true);
@@ -51,6 +46,13 @@ export default function Flights() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+
+    fetchFlights();
+  }, [currentPage, flightsPerPage]);
+
+
 
   const filteredFlights = flights.filter((flight: any) =>
     flight.code.toLowerCase().includes(search.toLowerCase())
