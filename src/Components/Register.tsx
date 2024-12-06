@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -120,7 +120,7 @@ const Register: React.FC = () => {
               required
             />
           </div>
-         
+
 
           <button
             type="submit"
@@ -135,7 +135,12 @@ const Register: React.FC = () => {
             )}
           </button>
 
-          <p className='pt-8 text-right '>Already registered? <a onClick={() => navigate('/login')} className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer'>please login</a></p>
+         
+          {/* <p className='pt-8 text-right '>Already registered? <a onClick={() => navigate('/login')} className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer'>please login</a></p> */}
+          <p className='pt-8 text-right '>Already registered?  <Link to="/login" className='font-medium text-[#18425D] underline underline-offset-8 cursor-pointer' >
+            Please login
+          </Link>
+</p>
 
         </form>
 
