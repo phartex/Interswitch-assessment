@@ -65,7 +65,8 @@ export default function Flights() {
 
   const handleDeleteClick = async (flight) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/flights/${flight.id}`);
+      // const response = await axios.delete(`http://localhost:5000/api/flights/${flight.id}`);
+      const response = await axios.delete(`https://flight-management-proxy.onrender.com/api/flights/${flight.id}`);
       console.log(response.data);
       fetchFlights();
       toast.success('Deleted Successfully!', {
@@ -104,13 +105,14 @@ export default function Flights() {
     console.log(selectedFlight)
     const payload = {
       code: selectedFlight?.code,
-      capacity: selectedFlight?.capacity,
+      capacity: Number(selectedFlight?.capacity),
       departureDate: selectedFlight?.departureDate
     }
     console.log(payload)
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/flights/${selectedFlight?.id}`,
+        // `http://localhost:5000/api/flights/${selectedFlight?.id}`,
+        `https://flight-management-proxy.onrender.com/api/flights/${selectedFlight?.id}`,
         payload
       );
       console.log(response.data);

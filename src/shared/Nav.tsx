@@ -12,8 +12,8 @@ export default function Nav() {
             <div className=''>
                 <Link to="/" >
                     {/* <img onClick={() => navigate('/')} src={InterswitchImage} alt="Interswitch Logo" /> */}
-                    <img src={InterswitchImage} alt="Interswitch Logo" />
-                    {/* <img  alt="Interswitch Logo" /> */}
+                    {/* <img src={InterswitchImage} alt="Interswitch Logo" /> */}
+                    <img  alt="Interswitch Logo" />
                 </Link>
 
 
