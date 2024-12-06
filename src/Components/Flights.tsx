@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback  } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,29 +30,48 @@ export default function Flights() {
 
   
 
-  const fetchFlights = async () => {
+  // const fetchFlights = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.get("https://flight-management-proxy.onrender.com/api/flights", {
+  //       params: { page: currentPage, size: flightsPerPage }, 
+  //     });
+  //     console.log(response.data); 
+  //     setFlights(response.data.resources); 
+  //     setTotalPages(response.data.counts);
+
+  //   } catch (error) {
+  //     console.error("Error fetching flights:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+  const fetchFlights = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get("https://flight-management-proxy.onrender.com/api/flights", {
-        params: { page: currentPage, size: flightsPerPage }, // Pass currentPage and size
+        params: { page: currentPage, size: flightsPerPage },
       });
-      console.log(response.data); // Debugging purpose
-      setFlights(response.data.resources); // Adjust according to your API response
+      console.log(response.data);
+      setFlights(response.data.resources);
       setTotalPages(response.data.counts);
-
     } catch (error) {
       console.error("Error fetching flights:", error);
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-
-    fetchFlights();
   }, [currentPage, flightsPerPage]);
 
+  // useEffect(() => {
 
+  //   fetchFlights();
+  // }, [currentPage, flightsPerPage]);
+
+  useEffect(() => {
+    fetchFlights();
+  }, [fetchFlights]);
 
   const filteredFlights = flights.filter((flight: any) =>
     flight.code.toLowerCase().includes(search.toLowerCase())
